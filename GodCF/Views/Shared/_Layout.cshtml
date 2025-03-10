@@ -1,0 +1,75 @@
+﻿﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Coffee Shop</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="~/images/logo.png" alt="Coffee Shop Logo">
+                <h1>Coffee Shop</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a asp-controller="Home" asp-action="Index"
+                        class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">Trang
+                        chủ</a></li>
+                <li><a asp-controller="Home" asp-action="Menu"
+                        class="@(ViewContext.RouteData.Values["Action"].ToString() == "Menu" ? "active" : "")">Thực
+                        đơn</a></li>
+                <li><a asp-controller="Home" asp-action="Order"
+                        class="@(ViewContext.RouteData.Values["Action"].ToString() == "Order" ? "active" : "")">Đặt
+                        hàng</a></li>
+                <li><a asp-controller="Home" asp-action="Booking"
+                        class="@(ViewContext.RouteData.Values["Action"].ToString() == "Booking" ? "active" : "")">Đặt
+                        bàn</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    @RenderBody()
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Về chúng tôi</h4>
+                <p>Coffee Shop - Nơi thưởng thức cà phê và ẩm thực tuyệt vời</p>
+            </div>
+            <div class="footer-section">
+                <h4>Liên kết</h4>
+                <ul>
+                    <li><a asp-controller="Home" asp-action="Menu">Thực đơn</a></li>
+                    <li><a asp-controller="Home" asp-action="Order">Đặt hàng</a></li>
+                    <li><a asp-controller="Home" asp-action="Booking">Đặt bàn</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Theo dõi chúng tôi</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Coffee Shop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

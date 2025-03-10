@@ -1,0 +1,53 @@
+﻿﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Chào mừng đến với Coffee Shop</h2>
+            <p>Nơi thưởng thức cà phê và ẩm thực tuyệt vời</p>
+            <a asp-controller="Home" asp-action="Menu" class="cta-button">Xem thực đơn</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <i class="fas fa-coffee"></i>
+            <h3>Cà phê chất lượng</h3>
+            <p>Hạt cà phê được chọn lọc kỹ lưỡng</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-clock"></i>
+            <h3>Phục vụ nhanh chóng</h3>
+            <p>Đội ngũ nhân viên chuyên nghiệp</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-percent"></i>
+            <h3>Ưu đãi hấp dẫn</h3>
+            <p>Chương trình khuyến mãi thường xuyên</p>
+        </div>
+    </section>
+
+    <section class="contact-info">
+        <h2>Thông tin liên hệ</h2>
+        <div class="contact-details">
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <p>123 Đường ABC, Quận XYZ, TP.HCM</p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <p>0123 456 789</p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-clock"></i>
+                <p>Thứ 2 - Chủ nhật: 7:00 - 22:00</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script src="~/js/main.js"></script>
+}

@@ -1,0 +1,125 @@
+@{
+    ViewData["Title"] = "Đặt bàn";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/booking.css" asp-append-version="true">
+}
+
+<main class="booking-page">
+    <div class="booking-container">
+        <section class="table-layout">
+            <h2>Sơ đồ bàn</h2>
+            <div class="date-picker">
+                <input type="date" id="bookingDate" required>
+                <select id="bookingTime" required>
+                    <option value="">Chọn giờ</option>
+                    @for (int hour = 8; hour <= 20; hour++)
+                    {
+                        <option value="@($"{hour:00}:00")">@($"{hour:00}:00")</option>
+                    }
+                </select>
+            </div>
+
+            <div class="table-status">
+                <div class="status-item">
+                    <div class="status-indicator available"></div>
+                    <span>Còn trống</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator occupied"></div>
+                    <span>Đã đặt</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator selected"></div>
+                    <span>Đang chọn</span>
+                </div>
+            </div>
+
+            <div class="floor-plan">
+                <div class="tables-grid">
+                    <!-- Row 1 -->
+                    @for (int i = 1; i <= 4; i++)
+                    {
+                        <div class="table" data-table="@i">
+                            <i class="fas fa-utensils"></i>
+                            <span>Bàn @i</span>
+                            <small>@(i <= 2 ? "2 người" : "4 người")</small>
+                        </div>
+                    }
+
+                    <!-- Row 2 -->
+                    @for (int i = 5; i <= 8; i++)
+                    {
+                        <div class="table" data-table="@i">
+                            <i class="fas fa-utensils"></i>
+                            <span>Bàn @i</span>
+                            <small>@(i <= 6 ? "6 người" : "4 người")</small>
+                        </div>
+                    }
+
+                    <!-- Row 3 - Large tables -->
+                    @for (int i = 9; i <= 10; i++)
+                    {
+                        <div class="table large" data-table="@i">
+                            <i class="fas fa-utensils"></i>
+                            <span>Bàn @i</span>
+                            <small>8 người</small>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <section class="booking-form">
+            <h2>Thông tin đặt bàn</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label for="customerName">Họ và tên *</label>
+                    <input type="text" id="customerName" name="customerName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerPhone">Số điện thoại *</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" required pattern="[0-9]{10}"
+                        title="Vui lòng nhập số điện thoại hợp lệ">
+                </div>
+
+                <div class="form-group">
+                    <label for="customerEmail">Email</label>
+                    <input type="email" id="customerEmail" name="customerEmail">
+                </div>
+
+                <div class="form-group">
+                    <label for="numberOfGuests">Số người *</label>
+                    <select id="numberOfGuests" name="numberOfGuests" required>
+                        <option value="">Chọn số người</option>
+                        <option value="1-2">1-2 người</option>
+                        <option value="3-4">3-4 người</option>
+                        <option value="5-6">5-6 người</option>
+                        <option value="7-8">7-8 người</option>
+                        <option value="9+">Trên 8 người</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="specialRequests">Yêu cầu đặc biệt</label>
+                    <textarea id="specialRequests" name="specialRequests"
+                        placeholder="Ghi chú thêm về đặt bàn..."></textarea>
+                </div>
+
+                <div class="selected-table-info">
+                    <p>Bàn đã chọn: <span id="selectedTableNumber">Chưa chọn</span></p>
+                    <p>Thời gian: <span id="selectedDateTime">Chưa chọn</span></p>
+                </div>
+
+                <button type="submit" class="submit-booking">Xác nhận đặt bàn</button>
+            </form>
+        </section>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="~/js/booking.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

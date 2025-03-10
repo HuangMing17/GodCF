@@ -1,0 +1,104 @@
+@{
+    ViewData["Title"] = "Đặt hàng";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/order.css" asp-append-version="true">
+}
+
+<main class="order-page">
+    <div class="order-container">
+        <section class="order-summary">
+            <h2>Đơn hàng của bạn</h2>
+            <div class="order-items">
+                <!-- Order items will be populated by JavaScript -->
+            </div>
+            <div class="order-totals">
+                <div class="subtotal">
+                    <span>Tạm tính:</span>
+                    <span class="subtotal-amount">0đ</span>
+                </div>
+                <div class="shipping">
+                    <span>Phí giao hàng:</span>
+                    <span class="shipping-amount">15.000đ</span>
+                </div>
+                <div class="total">
+                    <span>Tổng cộng:</span>
+                    <span class="total-amount">0đ</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="order-details">
+            <h2>Thông tin đặt hàng</h2>
+            <form method="post" class="order-form">
+                <div class="form-group">
+                    <label for="name">Họ và tên *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Số điện thoại *</label>
+                    <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}"
+                        title="Vui lòng nhập số điện thoại hợp lệ">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Địa chỉ giao hàng *</label>
+                    <textarea id="address" name="address" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Ghi chú</label>
+                    <textarea id="notes" name="notes" placeholder="Ghi chú thêm về đơn hàng..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Phương thức thanh toán *</label>
+                    <div class="payment-methods">
+                        <div class="payment-method">
+                            <input type="radio" id="cod" name="payment" value="cod" checked>
+                            <label for="cod">
+                                <i class="fas fa-money-bill-wave"></i>
+                                Thanh toán khi nhận hàng
+                            </label>
+                        </div>
+                        <div class="payment-method">
+                            <input type="radio" id="bank" name="payment" value="bank">
+                            <label for="bank">
+                                <i class="fas fa-university"></i>
+                                Chuyển khoản ngân hàng
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bank-details" style="display: none;">
+                    <p><strong>Thông tin chuyển khoản:</strong></p>
+                    <p>Ngân hàng: VietcomBank</p>
+                    <p>Số tài khoản: 1234567890</p>
+                    <p>Chủ tài khoản: COFFEE SHOP</p>
+                    <p>Nội dung: [Số điện thoại] thanh toán đơn hàng</p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-order">Đặt hàng</button>
+                    <a asp-controller="Home" asp-action="Menu" class="continue-shopping">
+                        <i class="fas fa-arrow-left"></i>
+                        Tiếp tục mua hàng
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="~/js/order.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
