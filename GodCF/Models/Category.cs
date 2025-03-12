@@ -6,16 +6,15 @@ namespace GodCF.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập tên danh mục")]
-        [Display(Name = "Tên danh mục")]
-        public string Name { get; set; } = string.Empty;
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
 
-        [Display(Name = "Mô tả")]
-        public string Description { get; set; } = string.Empty;
+        [StringLength(500)]
+        public string Description { get; set; }
 
-        [Display(Name = "Mã code")]
-        public string Code { get; set; } = string.Empty;
+        public bool IsDeleted { get; set; } = false;
 
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
