@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Coffee Shop</title>
+    <title>@ViewData["Title"] - God Cafe</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     @RenderSection("Styles", required: false)
@@ -13,11 +13,12 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <div class="navbar-brand">
-                    <img src="~/images/logo.png" alt="Coffee Shop Logo" class="d-inline-block align-text-top">
-                    <span>Coffee Shop</span>
+                <div class="navbar-brand d-flex align-items-center">
+                    <img src="~/logo/logo.webp" alt="God Cafe Logo" style="height: 40px;"
+                        class="d-inline-block align-text-top me-2">
+                    <span class="fs-4">God Cafe</span>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                     <span class="navbar-toggler-icon"></span>
@@ -47,13 +48,14 @@
         </nav>
     </header>
 
+
     @RenderBody()
 
     <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Về chúng tôi</h4>
-                <p>Coffee Shop - Nơi thưởng thức cà phê và ẩm thực tuyệt vời</p>
+                <p>God Cafe - Nơi thưởng thức cà phê và ẩm thực tuyệt vời</p>
             </div>
             <div class="footer-section">
                 <h4>Liên kết</h4>
@@ -73,7 +75,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Coffee Shop. All rights reserved.</p>
+            <p>&copy; 2024 God Cafe. All rights reserved.</p>
         </div>
     </footer>
 
