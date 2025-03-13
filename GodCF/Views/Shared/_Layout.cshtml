@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Coffee Shop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     @RenderSection("Styles", required: false)
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -12,27 +13,36 @@
 
 <body>
     <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="~/images/logo.png" alt="Coffee Shop Logo">
-                <h1>Coffee Shop</h1>
-            </div>
-            <ul class="nav-links">
-                <li><a asp-controller="Home" asp-action="Index"
-                        class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">Trang
-                        chủ</a></li>
-                <li><a asp-controller="Home" asp-action="Menu"
-                        class="@(ViewContext.RouteData.Values["Action"].ToString() == "Menu" ? "active" : "")">Thực
-                        đơn</a></li>
-                <li><a asp-controller="Home" asp-action="Order"
-                        class="@(ViewContext.RouteData.Values["Action"].ToString() == "Order" ? "active" : "")">Đặt
-                        hàng</a></li>
-                <li><a asp-controller="Home" asp-action="Booking"
-                        class="@(ViewContext.RouteData.Values["Action"].ToString() == "Booking" ? "active" : "")">Đặt
-                        bàn</a></li>
-            </ul>
-            <div class="mobile-menu">
-                <i class="fas fa-bars"></i>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <div class="navbar-brand">
+                    <img src="~/images/logo.png" alt="Coffee Shop Logo" class="d-inline-block align-text-top">
+                    <span>Coffee Shop</span>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link @(Context.Request.Path == "/" ? "active" : "")" asp-controller="Home"
+                                asp-action="Index">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(Context.Request.Path.StartsWithSegments("/Home/Menu") ? "active" : "")"
+                                asp-controller="Home" asp-action="Menu">Thực đơn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(Context.Request.Path.StartsWithSegments("/Home/Order") ? "active" : "")"
+                                asp-controller="Home" asp-action="Order">Đặt hàng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(Context.Request.Path.StartsWithSegments("/Home/Booking") ? "active" : "")"
+                                asp-controller="Home" asp-action="Booking">Đặt bàn</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
             </div>
         </nav>
     </header>
@@ -68,6 +78,7 @@
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

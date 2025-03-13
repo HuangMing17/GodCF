@@ -25,7 +25,7 @@ namespace GodCF.Controllers
         // GET: Product
         public IActionResult Index()
         {
-            var products = _productRepository.GetAll();
+            var products = _productRepository.GetAllWithImages();
             return View(products);
         }
 
@@ -41,34 +41,34 @@ namespace GodCF.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Description,Price,CategoryId")] Product product, List<IFormFile> images)
         {
-            
-                // Save product first to get the ID
-                _productRepository.Add(product);
 
-                // Process and save images
-                if (images != null && images.Count > 0)
+            // Save product first to get the ID
+            _productRepository.Add(product);
+
+            // Process and save images
+            if (images != null && images.Count > 0)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products");
+                Directory.CreateDirectory(uploadsFolder);
+
+                foreach (var image in images)
                 {
-                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products");
-                    Directory.CreateDirectory(uploadsFolder);
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                    foreach (var image in images)
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
-                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
-                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await image.CopyToAsync(fileStream);
-                        }
-
-                        product.Images.Add(new ProductImage { ImageUrl = "/images/products/" + uniqueFileName });
+                        await image.CopyToAsync(fileStream);
                     }
 
-                    _productRepository.Update(product);
+                    product.Images.Add(new ProductImage { ImageUrl = "/images/products/" + uniqueFileName });
                 }
 
-                return RedirectToAction(nameof(Index));
-           
+                _productRepository.Update(product);
+            }
+
+            return RedirectToAction(nameof(Index));
+
         }
 
         //// GET: Product/Edit/5
