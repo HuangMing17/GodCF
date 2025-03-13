@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using GodCF.Models;
+using GodCF.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GodCF.Controllers
@@ -7,10 +8,17 @@ namespace GodCF.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            ILogger<HomeController> logger,
+            IProductRepository productRepository,
+            ICategoryRepository categoryRepository)
         {
             _logger = logger;
+            _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public IActionResult Index()
@@ -20,7 +28,9 @@ namespace GodCF.Controllers
 
         public IActionResult Menu()
         {
-            return View();
+            ViewBag.Categories = _categoryRepository.GetAll();
+            var products = _productRepository.GetAllWithImages();
+            return View(products.OrderBy(p => p.Category?.Name).ThenBy(p => p.Name));
         }
 
         public IActionResult Order()

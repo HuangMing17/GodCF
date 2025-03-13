@@ -1,122 +1,176 @@
+@model IEnumerable<GodCF.Models.Product>
 @{
     ViewData["Title"] = "Thực đơn";
+    var categories = ViewBag.Categories as IEnumerable<GodCF.Models.Category>;
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/menu.css" asp-append-version="true">
-}
-
-<main class="menu-page">
-    <section class="menu-header">
-        <h2>Thực đơn của chúng tôi</h2>
-        <div class="menu-filters">
-            <button class="filter-btn active" data-category="all">Tất cả</button>
-            <button class="filter-btn" data-category="coffee">Cà phê</button>
-            <button class="filter-btn" data-category="tea">Trà</button>
-            <button class="filter-btn" data-category="pastries">Bánh ngọt</button>
-            <button class="filter-btn" data-category="smoothies">Sinh tố</button>
-        </div>
-    </section>
-
-    <section class="menu-grid">
-        <!-- Coffee Items -->
-        <div class="menu-item" data-category="coffee">
-            <img src="~/images/menu/cafe-sua.jpg" alt="Cà phê sữa">
-            <div class="item-info">
-                <h3>Cà phê sữa</h3>
-                <p>Cà phê đậm đà với sữa đặc thơm béo</p>
-                <div class="item-footer">
-                    <span class="price">35.000đ</span>
-                    <button class="add-to-cart" data-id="1">
-                        <i class="fas fa-shopping-cart"></i>
-                        Thêm vào giỏ
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="menu-item" data-category="coffee">
-            <img src="~/images/menu/cafe-den.jpg" alt="Cà phê đen">
-            <div class="item-info">
-                <h3>Cà phê đen</h3>
-                <p>Cà phê nguyên chất đậm đà</p>
-                <div class="item-footer">
-                    <span class="price">29.000đ</span>
-                    <button class="add-to-cart" data-id="2">
-                        <i class="fas fa-shopping-cart"></i>
-                        Thêm vào giỏ
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tea Items -->
-        <div class="menu-item" data-category="tea">
-            <img src="~/images/menu/tra-dao.jpg" alt="Trà đào">
-            <div class="item-info">
-                <h3>Trà đào</h3>
-                <p>Trà đào thơm mát với đào tươi</p>
-                <div class="item-footer">
-                    <span class="price">45.000đ</span>
-                    <button class="add-to-cart" data-id="3">
-                        <i class="fas fa-shopping-cart"></i>
-                        Thêm vào giỏ
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pastries Items -->
-        <div class="menu-item" data-category="pastries">
-            <img src="~/images/menu/tiramisu.jpg" alt="Tiramisu">
-            <div class="item-info">
-                <h3>Tiramisu</h3>
-                <p>Bánh tiramisu thơm ngon</p>
-                <div class="item-footer">
-                    <span class="price">55.000đ</span>
-                    <button class="add-to-cart" data-id="4">
-                        <i class="fas fa-shopping-cart"></i>
-                        Thêm vào giỏ
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Smoothies Items -->
-        <div class="menu-item" data-category="smoothies">
-            <img src="~/images/menu/sinh-to-dau.jpg" alt="Sinh tố dâu">
-            <div class="item-info">
-                <h3>Sinh tố dâu</h3>
-                <p>Sinh tố dâu tươi ngon</p>
-                <div class="item-footer">
-                    <span class="price">49.000đ</span>
-                    <button class="add-to-cart" data-id="5">
-                        <i class="fas fa-shopping-cart"></i>
-                        Thêm vào giỏ
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="shopping-cart-preview">
-        <div class="cart-header">
-            <h3>Giỏ hàng</h3>
-            <span class="cart-count">0</span>
-        </div>
-        <div class="cart-items">
-            <!-- Cart items will be added here dynamically -->
-        </div>
-        <div class="cart-footer">
-            <div class="total">
-                <span>Tổng cộng:</span>
-                <span class="total-amount">0đ</span>
-            </div>
-            <button class="checkout-btn">Thanh toán</button>
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h2 class="display-4 mb-3" style="color: var(--primary-color);">Thực Đơn</h2>
+            <p class="lead" style="color: var(--secondary-color);">Khám phá hương vị đặc biệt của God Cafe</p>
         </div>
     </div>
-</main>
+
+    <!-- Category Navigation -->
+    <div class="row mb-4">
+        <div class="col">
+            <ul class="nav nav-pills justify-content-center category-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#all" data-category="all">Tất cả</a>
+                </li>
+                @foreach (var category in categories)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="#@category.Id" data-category="@category.Id">@category.Name</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center my-5">
+            <i class="fas fa-coffee fa-3x mb-3" style="color: var(--accent-color);"></i>
+            <p class="lead">Thực đơn đang được cập nhật...</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4" id="menu-items">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4 menu-item" data-category="@item.CategoryId">
+                    <div class="card h-100 shadow-sm hover-shadow">
+                        @if (item.Images != null && item.Images.Any())
+                        {
+                            <div class="card-img-container">
+                                <img src="@item.Images.First().ImageUrl" class="card-img-top menu-img" 
+                                    alt="@item.Name" style="height: 220px; object-fit: cover;">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                                style="height: 220px;">
+                                <i class="fas fa-coffee fa-2x" style="color: var(--accent-color);"></i>
+                            </div>
+                        }
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0" style="color: var(--primary-color);">@item.Name</h5>
+                                <span class="badge" style="background-color: var(--secondary-color);">@item.Category?.Name</span>
+                            </div>
+                            @if (!string.IsNullOrEmpty(item.Description))
+                            {
+                                <p class="card-text small" style="color: var(--text-color);">@item.Description</p>
+                            }
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="fw-bold fs-5" style="color: var(--accent-color);">@item.Price.ToString("#,##0") ₫</span>
+                                <a asp-controller="Home" asp-action="Order" class="btn order-btn">
+                                    <i class="fas fa-shopping-cart me-1"></i>Đặt món
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+.hover-shadow {
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.15)!important;
+}
+
+.card-img-container {
+    overflow: hidden;
+}
+
+.menu-img {
+    transition: transform 0.5s ease;
+}
+
+.card:hover .menu-img {
+    transform: scale(1.1);
+}
+
+.category-nav {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 5px;
+}
+
+.category-nav .nav-link {
+    white-space: nowrap;
+    margin: 0 5px;
+    border-radius: 20px;
+    padding: 8px 20px;
+    color: var(--primary-color);
+}
+
+.category-nav .nav-link.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.category-nav .nav-link:hover:not(.active) {
+    background-color: var(--light-bg);
+}
+
+.category-nav::-webkit-scrollbar {
+    height: 4px;
+}
+
+.category-nav::-webkit-scrollbar-track {
+    background: var(--light-bg);
+}
+
+.category-nav::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 2px;
+}
+
+.order-btn {
+    color: var(--white);
+    background-color: var(--accent-color);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.order-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+</style>
 
 @section Scripts {
-    <script src="~/js/menu.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Category filtering
+            $('.category-nav .nav-link').click(function(e) {
+                e.preventDefault();
+                const category = $(this).data('category');
+                
+                $('.category-nav .nav-link').removeClass('active');
+                $(this).addClass('active');
+                
+                if (category === 'all') {
+                    $('.menu-item').fadeIn();
+                } else {
+                    $('.menu-item').hide();
+                    $('.menu-item[data-category="' + category + '"]').fadeIn();
+                }
+            });
+        });
+    </script>
 }
